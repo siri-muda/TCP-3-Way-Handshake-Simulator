@@ -1,0 +1,610 @@
+/* Simulator Specific Styles */
+
+/* Control Toolbar */
+.sim-controls-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.sim-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.sim-speed-control {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: var(--bg-tertiary);
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.speed-select {
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.25rem 0.5rem;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy);
+  outline: none;
+  cursor: pointer;
+}
+
+.speed-select:focus {
+  border-color: var(--primary);
+}
+
+/* Simulation Board (Endpoints & Channel) */
+.simulation-stage {
+  background: linear-gradient(to bottom, #ffffff, #f8fafc);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 2rem 2.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.stage-header-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.handshake-phase-tracker {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.phase-step {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-tertiary);
+  transition: all var(--transition-fast);
+}
+
+.phase-step.active {
+  background: var(--primary-light);
+  color: var(--primary);
+  border: 1px solid var(--primary-border);
+  font-weight: 700;
+}
+
+.phase-step.completed {
+  background: var(--success-light);
+  color: var(--success);
+  border: 1px solid var(--success-border);
+}
+
+.phase-arrow {
+  color: var(--text-light);
+  font-size: 0.75rem;
+}
+
+/* Endpoints Grid */
+.endpoints-container {
+  display: grid;
+  grid-template-columns: 280px 1fr 280px;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+  min-height: 280px;
+}
+
+/* Node Host Card (Client / Server) */
+.host-node {
+  background: white;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.35rem;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  position: relative;
+  z-index: 10;
+}
+
+.host-node.active-sender {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+.host-node.active-receiver {
+  border-color: var(--success);
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+}
+
+.host-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.host-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.host-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-tertiary);
+  color: var(--navy);
+}
+
+.client-node .host-icon {
+  background-color: #eff6ff;
+  color: var(--primary);
+}
+
+.server-node .host-icon {
+  background-color: #ecfdf5;
+  color: var(--success);
+}
+
+.host-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.2;
+}
+
+.host-ip {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* Node Details */
+.host-meta-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--border-color);
+  font-size: 0.82rem;
+}
+
+.meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.meta-key {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.meta-val {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--navy);
+}
+
+/* Network Channel / Wire */
+.network-channel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: 220px;
+}
+
+/* Interactive Wire Cables */
+.wire-track {
+  width: 100%;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: var(--radius-full);
+  position: relative;
+  margin: 28px 0;
+}
+
+.wire-track::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: repeating-linear-gradient(90deg, #94a3b8 0, #94a3b8 8px, transparent 8px, transparent 16px);
+  opacity: 0.4;
+}
+
+.wire-arrow-left, .wire-arrow-right {
+  position: absolute;
+  top: -8px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: white;
+  padding: 0 4px;
+}
+
+.wire-arrow-right { right: -6px; }
+.wire-arrow-left { left: -6px; }
+
+/* In-flight Animated Packet */
+.packet-capsule {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border: 2px solid var(--primary);
+  border-radius: var(--radius-lg);
+  padding: 0.6rem 1rem;
+  box-shadow: 0 8px 20px -2px rgba(37, 99, 235, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  min-width: 130px;
+}
+
+.packet-capsule.visible {
+  opacity: 1;
+}
+
+.packet-flag-tag {
+  font-size: 0.75rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.05em;
+}
+
+.packet-capsule.syn-type {
+  border-color: #2563eb;
+}
+.packet-capsule.syn-type .packet-flag-tag {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.packet-capsule.synack-type {
+  border-color: #7c3aed;
+}
+.packet-capsule.synack-type .packet-flag-tag {
+  background: #f5f3ff;
+  color: #6d28d9;
+}
+
+.packet-capsule.ack-type {
+  border-color: #10b981;
+}
+.packet-capsule.ack-type .packet-flag-tag {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.packet-capsule.loss-type {
+  border-color: #ef4444;
+  border-style: dashed;
+}
+.packet-capsule.loss-type .packet-flag-tag {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.packet-meta-quick {
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Loss indicator mark */
+.packet-drop-badge {
+  position: absolute;
+  background: #ef4444;
+  color: white;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+  animation: drop-pulse 1s infinite alternate;
+  z-index: 30;
+}
+
+@keyframes drop-pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+/* Connection Status Banner */
+.connection-status-banner {
+  margin-top: 1.5rem;
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.connection-status-banner.connected {
+  background-color: var(--success-light);
+  border-color: var(--success-border);
+  color: #065f46;
+}
+
+.connection-status-banner.failed {
+  background-color: var(--danger-light);
+  border-color: var(--danger-border);
+  color: #991b1b;
+}
+
+/* Step Narrative Explainer Card */
+.step-explainer {
+  background: #f8fafc;
+  border-left: 4px solid var(--primary);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 1rem 1.25rem;
+  margin-top: 1rem;
+}
+
+.step-explainer h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.35rem;
+}
+
+.step-explainer p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Packet Inspector Panel */
+.packet-inspector {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.tcp-header-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  background: var(--bg-tertiary);
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.header-field {
+  background: white;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.header-field.col-span-2 {
+  grid-column: span 2;
+}
+
+.header-field.col-span-4 {
+  grid-column: span 4;
+}
+
+.header-field .field-name {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.header-field .field-value {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--navy);
+  word-break: break-all;
+}
+
+.header-field.highlighted {
+  background-color: var(--primary-light);
+  border-color: var(--primary-border);
+}
+
+.header-field.highlighted .field-value {
+  color: var(--primary);
+}
+
+/* Flag Indicators Row */
+.flags-row {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
+}
+
+.flag-box {
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: #f1f5f9;
+  color: #94a3b8;
+  border: 1px solid #e2e8f0;
+}
+
+.flag-box.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary-hover);
+}
+
+/* Sequence Ladder Chart (MSC) */
+.sequence-chart-container {
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.chart-svg-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Wireshark-Style Event Log Table */
+.event-log-container {
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: white;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.event-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  font-family: var(--font-mono);
+  text-align: left;
+}
+
+.event-table th {
+  position: sticky;
+  top: 0;
+  background-color: var(--bg-tertiary);
+  color: var(--navy);
+  font-weight: 700;
+  padding: 0.65rem 0.85rem;
+  border-bottom: 2px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.event-table td {
+  padding: 0.6rem 0.85rem;
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.event-table tr:hover {
+  background-color: #f8fafc;
+  cursor: pointer;
+}
+
+.event-table tr.selected-row {
+  background-color: var(--primary-light);
+}
+
+/* Settings Form Drawer / Modal */
+.settings-drawer {
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  display: none;
+  animation: slide-down 0.25s ease;
+}
+
+.settings-drawer.open {
+  display: block;
+}
+
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-group label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.form-control {
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: var(--navy);
+  transition: border-color var(--transition-fast);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.form-hint {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}

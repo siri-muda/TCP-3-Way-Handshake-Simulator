@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn TCP Concepts | Computer Networks</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <style>
+    .concept-box {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .concept-box h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .concept-box p {
+      color: #334155;
+      font-size: 0.93rem;
+      line-height: 1.65;
+      margin-bottom: 0.75rem;
+    }
+    .callout {
+      background: #eff6ff;
+      border-left: 4px solid var(--primary);
+      padding: 0.85rem 1.15rem;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      font-size: 0.88rem;
+      color: #1e3a8a;
+      margin: 0.85rem 0;
+    }
+    .callout-amber {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      color: #78350f;
+    }
+    .callout-green {
+      background: #ecfdf5;
+      border-left: 4px solid #10b981;
+      color: #064e3b;
+    }
+    .table-compare {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.88rem;
+    }
+    .table-compare th {
+      background-color: var(--bg-tertiary);
+      color: var(--navy);
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 2px solid var(--border-color);
+      font-weight: 700;
+    }
+    .table-compare td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .table-compare tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+    .viva-item {
+      border-left: 3px solid #3b82f6;
+      background: #f8fafc;
+      padding: 1rem 1.25rem;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      margin-bottom: 1rem;
+    }
+    .viva-q {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--navy);
+      margin-bottom: 0.35rem;
+    }
+    .viva-a {
+      font-size: 0.88rem;
+      color: #334155;
+      line-height: 1.55;
+    }
+    .step-visual-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.15rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand-section">
+        <div class="brand-icon">
+          <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>TCP Simulator</h1>
+          <span>Networks PBL Project</span>
+        </div>
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </div>
+
+      <nav class="nav-menu" id="nav-menu">
+        <a href="../index.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          Dashboard
+        </a>
+        <a href="simulator.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Handshake Simulator
+        </a>
+        <a href="learn.html" class="nav-item active">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          Learn TCP Concepts
+        </a>
+        <a href="scenarios.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          Failure Scenarios
+        </a>
+        <a href="quiz.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Knowledge Quiz
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="pbl-badge">
+          <span class="pbl-badge-dot"></span>
+          <span>Study Guide</span>
+        </div>
+        <p>Computer Networks Syllabus: Transport Layer</p>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <header class="top-header">
+        <div class="header-title-area">
+          <h2 class="header-page-title">Learn TCP Handshake Concepts</h2>
+          <span class="header-status-pill">
+            <span class="dot"></span>
+            Theory & Viva Reference
+          </span>
+        </div>
+        <div class="header-actions">
+          <a href="simulator.html" class="btn btn-outline-primary btn-sm">Interactive Simulator &rarr;</a>
+        </div>
+      </header>
+
+      <div class="page-container">
+        <!-- Hero Summary -->
+        <section class="page-hero">
+          <span class="hero-tag">Computer Networks Curriculum</span>
+          <h2>The Mechanics of TCP Connection Establishment</h2>
+          <p>
+            The Transmission Control Protocol (TCP) operates at Layer 4 (Transport Layer) of the OSI model.
+            Before any application bytes (such as web pages, emails, or files) can be exchanged, TCP must establish
+            a reliable, bidirectional session using the <strong>3-Way Handshake (SYN, SYN-ACK, ACK)</strong> defined in <strong>RFC 793</strong>.
+          </p>
+        </section>
+
+        <!-- Topic 1: What is TCP & Why Handshake? -->
+        <div class="concept-box">
+          <h3>
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            1. What is TCP and What Does a "Handshake" Mean?
+          </h3>
+          <p>
+            The Internet Protocol (IP) at Layer 3 is inherently <em>unreliable</em> and <em>connectionless</em>. IP packets can be dropped, duplicated, delayed, or delivered out of order.
+            TCP sits directly on top of IP to transform this best-effort datagram channel into a <strong>reliable, ordered, and error-checked byte stream</strong>.
+          </p>
+          <p>
+            A <strong>handshake</strong> is an initial agreement protocol between two endpoints (Client and Server) before transmitting user payload. During this phase:
+          </p>
+          <ul style="margin-left: 1.5rem; margin-bottom: 0.75rem; color: #334155; line-height: 1.6;">
+            <li>Both parties agree on <strong>Initial Sequence Numbers (ISNs)</strong> to track incoming and outgoing bytes.</li>
+            <li>Both hosts allocate operating system memory called <strong>Transmission Control Blocks (TCBs)</strong> and socket buffers.</li>
+            <li>Connection options are negotiated (such as Maximum Segment Size - MSS, and Window Scaling).</li>
+            <li>Both parties verify that bidirectional network connectivity actually works.</li>
+          </ul>
+          <div class="callout">
+            <strong>Key Concept:</strong> Without the handshake, neither endpoint would know what byte offsets to expect, making packet loss detection and byte reassembly impossible.
+          </div>
+        </div>
+
+        <!-- Topic 2: TCP Control Flags & Header Layout -->
+        <div class="concept-box">
+          <h3>
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/></svg>
+            2. The Roles of TCP Control Flags (SYN, ACK, RST, FIN)
+          </h3>
+          <p>
+            The standard TCP header is 20 bytes long (Data Offset = 5). Within the header lies a 6-bit field of control flags:
+          </p>
+          <div class="grid-3" style="margin-top: 1rem;">
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem;">
+              <span class="badge badge-syn" style="margin-bottom: 0.5rem;">SYN (Synchronize)</span>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0;">
+                Requests sequence number synchronization. Present only in the first packet sent by client (Step 1) and server (Step 2).
+              </p>
+            </div>
+
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem;">
+              <span class="badge badge-ack" style="margin-bottom: 0.5rem;">ACK (Acknowledgment)</span>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0;">
+                Validates the 32-bit Acknowledgment Number field. Once a connection is active, almost all subsequent segments have ACK=1.
+              </p>
+            </div>
+
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem;">
+              <span class="badge badge-rst" style="margin-bottom: 0.5rem;">RST (Reset)</span>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0;">
+                Aborts an invalid or rejected connection immediately. Returned when connecting to a closed port or when an unrecoverable error occurs.
+              </p>
+            </div>
+
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem;">
+              <span class="badge" style="background: #f1f5f9; color: #475569; margin-bottom: 0.5rem;">FIN (Finish)</span>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0;">
+                Signals graceful connection teardown when an application has finished streaming data.
+              </p>
+            </div>
+
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem;">
+              <span class="badge" style="background: #f1f5f9; color: #475569; margin-bottom: 0.5rem;">PSH (Push)</span>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0;">
+                Informs the receiving OS kernel to deliver data to the application buffer immediately without buffering.
+              </p>
+            </div>
+
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem;">
+              <span class="badge" style="background: #f1f5f9; color: #475569; margin-bottom: 0.5rem;">URG (Urgent)</span>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0;">
+                Indicates the Urgent Pointer field is valid, pointing to high-priority out-of-band data (e.g. Ctrl+C in Telnet).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Topic 3: Sequence Numbers & The Phantom Byte -->
+        <div class="concept-box">
+          <h3>
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+            3. Sequence & Acknowledgment Mathematics Explained
+          </h3>
+          <p>
+            A common viva question is: <em>"Why does the server acknowledge a SYN of Seq=1000 with Ack=1001 when no payload bytes were sent?"</em>
+          </p>
+          <div class="callout callout-amber">
+            <strong>The Phantom Byte Rule:</strong> In TCP, the Acknowledgment Number represents the <em>next sequence number byte the receiver expects to receive</em>.<br>
+            If a SYN consumed 0 sequence numbers, the server's reply would have Ack=1000. But if client later transmitted 0-byte keepalive or repeated packet with Seq=1000, there would be ambiguity!
+            To ensure that state transitions are guaranteed and reliable, <strong>RFC 793 mandates that SYN and FIN flags consume exactly 1 logical sequence number byte</strong>.
+          </div>
+          <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; font-family: var(--font-mono); font-size: 0.85rem;">
+            <div><strong>Step 1:</strong> Client sends [SYN] &rarr; <code>Seq = Client_ISN</code>, <code>Ack = 0</code></div>
+            <div style="margin: 0.4rem 0;"><strong>Step 2:</strong> Server sends [SYN, ACK] &rarr; <code>Seq = Server_ISN</code>, <code>Ack = Client_ISN + 1</code></div>
+            <div><strong>Step 3:</strong> Client sends [ACK] &rarr; <code>Seq = Client_ISN + 1</code>, <code>Ack = Server_ISN + 1</code></div>
+          </div>
+        </div>
+
+        <!-- Topic 4: Step-by-Step Handshake Walkthrough -->
+        <div class="concept-box">
+          <h3>
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            4. Deep Dive into the 3 Handshake Steps
+          </h3>
+          <div class="grid-3">
+            <div class="step-visual-card">
+              <span class="badge badge-syn" style="margin-bottom: 0.5rem;">Step 1: SYN</span>
+              <h4 style="font-size: 0.95rem; color: var(--navy); margin-bottom: 0.35rem;">Client &rarr; Server</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+                Client selects a 32-bit random Initial Sequence Number (e.g. 1000).
+                Client sets SYN flag = 1.
+                Client changes state from <strong>CLOSED</strong> to <strong>SYN-SENT</strong>.
+              </p>
+            </div>
+
+            <div class="step-visual-card">
+              <span class="badge badge-synack" style="margin-bottom: 0.5rem;">Step 2: SYN-ACK</span>
+              <h4 style="font-size: 0.95rem; color: var(--navy); margin-bottom: 0.35rem;">Server &rarr; Client</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+                Server receives SYN on listening port. Sets state to <strong>SYN-RECEIVED</strong>.
+                Acknowledges client SYN by setting Ack = 1001. Generates own ISN (e.g. 5000) and sets SYN=1, ACK=1.
+              </p>
+            </div>
+
+            <div class="step-visual-card">
+              <span class="badge badge-ack" style="margin-bottom: 0.5rem;">Step 3: ACK</span>
+              <h4 style="font-size: 0.95rem; color: var(--navy); margin-bottom: 0.35rem;">Client &rarr; Server</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+                Client receives SYN-ACK and sets state to <strong>ESTABLISHED</strong>.
+                Client transmits final ACK with Seq = 1001 and Ack = 5001.
+                Server receives ACK and transitions to <strong>ESTABLISHED</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Topic 5: Real World Example (Visiting a Web Page) -->
+        <div class="concept-box">
+          <h3>
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+            5. Real-World Lifecycle: What Happens When You Open https://example.com?
+          </h3>
+          <p>
+            When a user types a URL into Google Chrome or Firefox, the network stack executes the following sequential stages:
+          </p>
+          <ol style="margin-left: 1.5rem; color: #334155; line-height: 1.7; font-size: 0.9rem;">
+            <li><strong>DNS Resolution:</strong> Browser queries a DNS resolver via UDP port 53 to map <code>example.com</code> to an IP address (e.g. <code>93.184.216.34</code>).</li>
+            <li><strong>TCP 3-Way Handshake:</strong> Browser initiates TCP handshake on port 443 (HTTPS) or port 80 (HTTP) to establish the transport virtual circuit. (1 RTT)</li>
+            <li><strong>TLS Cryptographic Handshake:</strong> If HTTPS, client and server negotiate cipher suites and exchange certificates to establish TLS encryption keys.</li>
+            <li><strong>HTTP Request / Response:</strong> Browser transmits <code>GET / HTTP/1.1</code>. Server returns <code>200 OK</code> with the HTML document.</li>
+            <li><strong>Connection Teardown:</strong> When done, the connection is cleanly closed using a <strong>4-Way FIN/ACK</strong> handshake.</li>
+          </ol>
+        </div>
+
+        <!-- Topic 6: TCP vs UDP Comparison Table -->
+        <div class="concept-box">
+          <h3>
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            6. TCP vs UDP: Key Transport Layer Differences
+          </h3>
+          <div style="overflow-x: auto;">
+            <table class="table-compare">
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>TCP (Transmission Control Protocol)</th>
+                  <th>UDP (User Datagram Protocol)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Connection Type</strong></td>
+                  <td>Connection-oriented (Requires 3-way handshake)</td>
+                  <td>Connectionless (No handshake, sends immediately)</td>
+                </tr>
+                <tr>
+                  <td><strong>Reliability</strong></td>
+                  <td>Guaranteed delivery with sequence ACK & retransmission</td>
+                  <td>Best-effort delivery (Packets may drop silently)</td>
+                </tr>
+                <tr>
+                  <td><strong>Data Ordering</strong></td>
+                  <td>Strictly ordered (Reassembles out-of-order packets)</td>
+                  <td>No ordering guarantees (Packets processed as received)</td>
+                </tr>
+                <tr>
+                  <td><strong>Header Overhead</strong></td>
+                  <td>20 to 60 bytes</td>
+                  <td>8 bytes fixed</td>
+                </tr>
+                <tr>
+                  <td><strong>Flow & Congestion Control</strong></td>
+                  <td>Yes (Sliding window, slow-start, AIMD congestion)</td>
+                  <td>None (Transmits at whatever rate the app sends)</td>
+                </tr>
+                <tr>
+                  <td><strong>Primary Use Cases</strong></td>
+                  <td>Web browsing (HTTP/HTTPS), Email (SMTP), File transfer (FTP/SSH)</td>
+                  <td>Live video streaming, VoIP, Gaming, DNS queries</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Topic 7: Top Viva Questions & Answers -->
+        <div class="concept-box">
+          <h3>
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            7. High-Yield Viva Examination Q&A
+          </h3>
+          <div class="viva-item">
+            <div class="viva-q">Q1. Why are Initial Sequence Numbers (ISNs) randomized instead of always starting at 0?</div>
+            <div class="viva-a">
+              <strong>Answer:</strong> Security and collision avoidance. If sequence numbers always started at 0, an attacker could easily guess sequence numbers to perform <em>TCP sequence prediction attacks</em> and session hijacking. Furthermore, randomizing ISNs prevents packets from older dead connections from being misinterpreted as belonging to a newly opened connection.
+            </div>
+          </div>
+
+          <div class="viva-item">
+            <div class="viva-q">Q2. What is a SYN Flood attack and how do SYN Cookies mitigate it?</div>
+            <div class="viva-a">
+              <strong>Answer:</strong> An attacker sends massive volumes of spoofed SYN packets without ever completing the handshake with the final ACK. The server allocates TCB memory for each half-open connection until its backlog is exhausted, crashing legitimate access. <em>SYN Cookies</em> solve this by encoding state mathematically inside the server's ISN without allocating memory until the final valid ACK arrives.
+            </div>
+          </div>
+
+          <div class="viva-item">
+            <div class="viva-q">Q3. Can application payload data be sent in the 3rd step of the handshake?</div>
+            <div class="viva-a">
+              <strong>Answer:</strong> Yes! Per RFC 793, the client has already validated the server's SYN-ACK and is officially in ESTABLISHED state. Therefore, the client is allowed to piggyback HTTP GET data inside the 3rd packet (ACK).
+            </div>
+          </div>
+
+          <div class="viva-item">
+            <div class="viva-q">Q4. What is the difference between TCP Flow Control and Congestion Control?</div>
+            <div class="viva-a">
+              <strong>Answer:</strong> <em>Flow control</em> protects the receiver from being overwhelmed by a faster sender using the 16-bit Window Size field. <em>Congestion control</em> protects the intermediate network and routers from bottleneck congestion using Congestion Window (cwnd) algorithms like Slow Start and Congestion Avoidance.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="app-footer">
+        <div class="footer-left">
+          <span class="footer-badge">Computer Networks PBL</span>
+          <span>TCP Handshake Theory & Viva Reference</span>
+        </div>
+        <div>
+          <span>B.Tech / BE Engineering Demonstration &bull; &copy; <span id="current-year"></span></span>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>

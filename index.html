@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TCP 3-Way Handshake Simulator | Computer Networks PBL</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/simulator.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand-section">
+        <div class="brand-icon">
+          <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>TCP Simulator</h1>
+          <span>Networks PBL Project</span>
+        </div>
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </div>
+
+      <nav class="nav-menu" id="nav-menu">
+        <a href="index.html" class="nav-item active">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          Dashboard
+        </a>
+        <a href="pages/simulator.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Handshake Simulator
+        </a>
+        <a href="pages/learn.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          Learn TCP Concepts
+        </a>
+        <a href="pages/scenarios.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          Failure Scenarios
+        </a>
+        <a href="pages/quiz.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Knowledge Quiz
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="pbl-badge">
+          <span class="pbl-badge-dot"></span>
+          <span>B.Tech / BE Computer Networks</span>
+        </div>
+        <p>Project-Based Learning (PBL)</p>
+        <p style="font-size: 0.72rem; color: #64748b; margin-top: 0.25rem;">Transport Layer &bull; RFC 793</p>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-title-area">
+          <h2 class="header-page-title">Dashboard Overview</h2>
+          <span class="header-status-pill">
+            <span class="dot"></span>
+            Simulator Engine Ready
+          </span>
+        </div>
+        <div class="header-actions">
+          <a href="pages/simulator.html" class="btn btn-primary btn-sm">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            Launch Simulator
+          </a>
+        </div>
+      </header>
+
+      <!-- Page Container -->
+      <div class="page-container">
+        <!-- Hero Section -->
+        <section class="page-hero">
+          <span class="hero-tag">Computer Networks PBL Project</span>
+          <h2>TCP 3-Way Handshake Interactive Simulator</h2>
+          <p>
+            An educational visualization platform demonstrating how the Transmission Control Protocol (TCP)
+            establishes a reliable, full-duplex virtual connection between two endpoints before data transfer begins.
+            Explore packet flags, sequence/acknowledgment arithmetic, state transitions, and network loss resilience.
+          </p>
+          <div style="margin-top: 1.5rem; display: flex; gap: 0.85rem; flex-wrap: wrap;">
+            <a href="pages/simulator.html" class="btn btn-primary btn-lg">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              Start Interactive Simulation
+            </a>
+            <a href="pages/learn.html" class="btn btn-secondary btn-lg" style="color: white; background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2);">
+              Read Theory & Viva Notes
+            </a>
+          </div>
+        </section>
+
+        <!-- Stats Overview Row -->
+        <div class="grid-4" style="margin-bottom: 2rem;">
+          <div class="stat-box">
+            <div class="stat-icon blue">
+              <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <div class="stat-content">
+              <div class="stat-label">Handshake Steps</div>
+              <div class="stat-value">3 Packets</div>
+            </div>
+          </div>
+
+          <div class="stat-box">
+            <div class="stat-icon green">
+              <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            </div>
+            <div class="stat-content">
+              <div class="stat-label">Reliability</div>
+              <div class="stat-value">100% Guaranteed</div>
+            </div>
+          </div>
+
+          <div class="stat-box">
+            <div class="stat-icon amber">
+              <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div class="stat-content">
+              <div class="stat-label">Failure Cases</div>
+              <div class="stat-value">5 Scenarios</div>
+            </div>
+          </div>
+
+          <div class="stat-box">
+            <div class="stat-icon purple">
+              <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+            </div>
+            <div class="stat-content">
+              <div class="stat-label">Assessment Quiz</div>
+              <div class="stat-value">12 Questions</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Handshake Visual Preview Card -->
+        <div class="card" style="margin-bottom: 2rem;">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
+              Handshake Process at a Glance
+            </h3>
+            <span class="badge badge-syn">RFC 793 Protocol Model</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;">
+            <!-- Step 1 Summary -->
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+                <span class="badge badge-syn">Step 1</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Client &rarr; Server</span>
+              </div>
+              <h4 style="font-size: 1rem; color: var(--navy); margin-bottom: 0.35rem;">SYN (Synchronize)</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+                Client picks random Initial Sequence Number (e.g. <code>ISN=1000</code>). Informs server of its intent to connect.
+              </p>
+              <div style="margin-top: 0.75rem; padding: 0.4rem; background: white; border-radius: 4px; border: 1px solid var(--border-color); font-family: var(--font-mono); font-size: 0.78rem;">
+                State: <strong>CLOSED &rarr; SYN-SENT</strong>
+              </div>
+            </div>
+
+            <!-- Step 2 Summary -->
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+                <span class="badge badge-synack">Step 2</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Server &rarr; Client</span>
+              </div>
+              <h4 style="font-size: 1rem; color: var(--navy); margin-bottom: 0.35rem;">SYN-ACK</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+                Server acknowledges client's SYN (<code>Ack = 1001</code>) and sends its own sequence number (<code>ISN=5000</code>).
+              </p>
+              <div style="margin-top: 0.75rem; padding: 0.4rem; background: white; border-radius: 4px; border: 1px solid var(--border-color); font-family: var(--font-mono); font-size: 0.78rem;">
+                State: <strong>LISTEN &rarr; SYN-RECEIVED</strong>
+              </div>
+            </div>
+
+            <!-- Step 3 Summary -->
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+                <span class="badge badge-ack">Step 3</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Client &rarr; Server</span>
+              </div>
+              <h4 style="font-size: 1rem; color: var(--navy); margin-bottom: 0.35rem;">ACK (Acknowledge)</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+                Client acknowledges server's SYN (<code>Ack = 5001</code>). Virtual circuit is established on both ends!
+              </p>
+              <div style="margin-top: 0.75rem; padding: 0.4rem; background: white; border-radius: 4px; border: 1px solid var(--border-color); font-family: var(--font-mono); font-size: 0.78rem;">
+                State: <strong>ESTABLISHED (Both)</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section: Why TCP Uses a 3-Way Handshake -->
+        <div class="card" style="margin-bottom: 2rem;">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Why Does TCP Require Exactly a 3-Way Handshake?
+            </h3>
+            <span class="pbl-badge" style="margin: 0;">Top Viva Examination Question</span>
+          </div>
+          <div class="grid-2">
+            <div style="padding: 0.5rem;">
+              <h4 style="font-size: 1rem; color: #b91c1c; margin-bottom: 0.5rem; display:flex; align-items:center; gap:0.4rem;">
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+                Why Not a 2-Way Handshake?
+              </h4>
+              <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+                In an unreliable IP network, packets can be delayed by intermediate routers. If a client transmits a SYN that gets delayed, times out, and later arrives at the server, a 2-way protocol would force the server to allocate memory and open a connection immediately upon sending SYN-ACK.
+                However, the client already discarded that attempt! This creates a dangerous <strong>half-open ghost connection</strong> where the server wastes memory waiting for data that will never arrive.
+              </p>
+            </div>
+            <div style="padding: 0.5rem;">
+              <h4 style="font-size: 1rem; color: #15803d; margin-bottom: 0.5rem; display:flex; align-items:center; gap:0.4rem;">
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                Why Not a 4-Way Handshake?
+              </h4>
+              <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+                A 4-way exchange (SYN &rarr; ACK &rarr; SYN &rarr; ACK) would be redundant.
+                Because the server needs to acknowledge the client's SYN and also initiate its own sequence synchronization, TCP intelligently <strong>piggybacks</strong> both operations into a single combined packet: <strong>SYN-ACK</strong>.
+                This combines steps 2 and 3 into one round-trip transmission, saving network latency while maintaining full mathematical reliability.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation Feature Cards -->
+        <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--navy); margin-bottom: 1rem;">
+          Project Modules & Learning Sections
+        </h3>
+
+        <div class="grid-2">
+          <!-- Card 1: Interactive Simulator -->
+          <a href="pages/simulator.html" class="feature-card">
+            <div class="feature-icon-wrapper">
+              <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <h3>Interactive Handshake Simulator</h3>
+            <p>
+              Step-by-step visual animation of SYN, SYN-ACK, and ACK transmissions. Includes dynamic sequence ladder diagrams, live TCP header packet inspector, custom port/ISN controls, and Wireshark-style event logs.
+            </p>
+            <span class="feature-link-text">
+              Open Simulator
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </span>
+          </a>
+
+          <!-- Card 2: Failure Scenarios -->
+          <a href="pages/scenarios.html" class="feature-card">
+            <div class="feature-icon-wrapper" style="background: #fffbeb; color: #f59e0b;">
+              <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            </div>
+            <h3>Network Failure & Edge Scenarios</h3>
+            <p>
+              Simulate packet drops, server timeouts, closed ports (RST), SYN-ACK loss, and high network delay. Observe how TCP Retransmission Timeouts (RTO) and exponential backoff prevent dropped connections.
+            </p>
+            <span class="feature-link-text">
+              Test Scenarios
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </span>
+          </a>
+
+          <!-- Card 3: Learn TCP -->
+          <a href="pages/learn.html" class="feature-card">
+            <div class="feature-icon-wrapper" style="background: #eff6ff; color: #2563eb;">
+              <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            </div>
+            <h3>Complete TCP Theory Guide</h3>
+            <p>
+              Comprehensive textbook notes covering TCP header layout, 6 control flags, sequence/acknowledgment mathematics, why SYN consumes 1 byte, state machine diagrams, and TCP vs UDP comparisons.
+            </p>
+            <span class="feature-link-text">
+              Study Concepts
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </span>
+          </a>
+
+          <!-- Card 4: Quiz -->
+          <a href="pages/quiz.html" class="feature-card">
+            <div class="feature-icon-wrapper" style="background: #ecfdf5; color: #10b981;">
+              <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <h3>Interactive Knowledge Quiz</h3>
+            <p>
+              Test your exam readiness with 12 multiple choice questions covering handshake sequencing, flag permutations, state transitions, and real-world failure handling with instant explanations.
+            </p>
+            <span class="feature-link-text">
+              Take Quiz
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- App Footer -->
+      <footer class="app-footer">
+        <div class="footer-left">
+          <span class="footer-badge">Computer Networks PBL</span>
+          <span>TCP 3-Way Handshake Educational Simulator</span>
+        </div>
+        <div>
+          <span>B.Tech / BE Engineering Demonstration &bull; &copy; <span id="current-year"></span></span>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+  <script src="js/app.js"></script>
+</body>
+</html>

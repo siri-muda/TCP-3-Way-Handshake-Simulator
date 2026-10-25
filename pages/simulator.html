@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Handshake Simulator | TCP 3-Way Handshake</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/simulator.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand-section">
+        <div class="brand-icon">
+          <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>TCP Simulator</h1>
+          <span>Networks PBL Project</span>
+        </div>
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </div>
+
+      <nav class="nav-menu" id="nav-menu">
+        <a href="../index.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          Dashboard
+        </a>
+        <a href="simulator.html" class="nav-item active">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Handshake Simulator
+        </a>
+        <a href="learn.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          Learn TCP Concepts
+        </a>
+        <a href="scenarios.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          Failure Scenarios
+        </a>
+        <a href="quiz.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Knowledge Quiz
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="pbl-badge">
+          <span class="pbl-badge-dot"></span>
+          <span>Simulation Active</span>
+        </div>
+        <p>Shortcuts: [Space] Play/Pause, [&rarr;] Next, [&larr;] Prev, [R] Reset</p>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-title-area">
+          <h2 class="header-page-title">Interactive TCP 3-Way Handshake Simulator</h2>
+          <span class="header-status-pill">
+            <span class="dot"></span>
+            Live Virtual Channel
+          </span>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-secondary btn-sm" id="btn-toggle-settings">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            Custom Parameters
+          </button>
+        </div>
+      </header>
+
+      <div class="page-container">
+        <!-- Settings Drawer -->
+        <div class="settings-drawer" id="settings-drawer">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color);">
+            <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--navy);">Customize Simulation Parameters</h3>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Adjust Initial Sequence Numbers & Port Assignments</span>
+          </div>
+          <form id="settings-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="input-client-isn">Client Initial Seq Number (ISN)</label>
+                <input type="number" id="input-client-isn" class="form-control" value="1000" min="0" max="4294967295" required>
+                <span class="form-hint">Default: 1000 (32-bit integer)</span>
+              </div>
+              <div class="form-group">
+                <label for="input-server-isn">Server Initial Seq Number (ISN)</label>
+                <input type="number" id="input-server-isn" class="form-control" value="5000" min="0" max="4294967295" required>
+                <span class="form-hint">Default: 5000 (32-bit integer)</span>
+              </div>
+              <div class="form-group">
+                <label for="input-client-port">Client Ephemeral Port</label>
+                <input type="number" id="input-client-port" class="form-control" value="50000" min="1024" max="65535" required>
+                <span class="form-hint">Default: 50000 (Range: 1024-65535)</span>
+              </div>
+              <div class="form-group">
+                <label for="input-server-port">Server Listening Port</label>
+                <input type="number" id="input-server-port" class="form-control" value="80" min="1" max="65535" required>
+                <span class="form-hint">Default: 80 (HTTP Standard Port)</span>
+              </div>
+            </div>
+            <div style="margin-top: 1rem; display: flex; gap: 0.75rem;">
+              <button type="submit" class="btn btn-primary btn-sm" id="btn-apply-settings">Apply & Reset Simulator</button>
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-reset-settings">Restore Standard Defaults</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Simulation Controls Toolbar -->
+        <div class="sim-controls-card">
+          <div class="sim-btn-group">
+            <button class="btn btn-primary" id="btn-start" title="Run full automated handshake sequence">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              Start Simulation
+            </button>
+            <button class="btn btn-secondary" id="btn-next" title="Transmit next packet step-by-step">
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/></svg>
+              Next Step
+            </button>
+            <button class="btn btn-secondary" id="btn-prev" disabled title="Step backward">
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/></svg>
+              Previous Step
+            </button>
+            <button class="btn btn-secondary" id="btn-pause" disabled title="Pause or resume auto playback">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+              Pause
+            </button>
+            <button class="btn btn-secondary" id="btn-reset" title="Reset all socket buffers and state">
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+              Reset
+            </button>
+          </div>
+
+          <div class="sim-speed-control">
+            <span>Speed:</span>
+            <select id="speed-select" class="speed-select">
+              <option value="0.5">0.5x (Slow Motion)</option>
+              <option value="1.0" selected>1.0x (Normal)</option>
+              <option value="1.5">1.5x (Fast)</option>
+              <option value="2.0">2.0x (Instant)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Simulation Stage Board -->
+        <div class="simulation-stage" id="simulation-stage-board">
+          <!-- Handshake Phase Tracker Header -->
+          <div class="stage-header-info">
+            <div class="handshake-phase-tracker">
+              <div class="phase-step" id="step-ind-1">
+                <span>1</span>
+                <span>SYN (Client &rarr; Server)</span>
+              </div>
+              <span class="phase-arrow">&rarr;</span>
+              <div class="phase-step" id="step-ind-2">
+                <span>2</span>
+                <span>SYN-ACK (Server &rarr; Client)</span>
+              </div>
+              <span class="phase-arrow">&rarr;</span>
+              <div class="phase-step" id="step-ind-3">
+                <span>3</span>
+                <span>ACK (Client &rarr; Server)</span>
+              </div>
+            </div>
+            <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">RFC 793 Specification</span>
+          </div>
+
+          <!-- Endpoints & Channel Grid -->
+          <div class="endpoints-container">
+            <!-- Client Node (Left) -->
+            <div class="host-node client-node" id="client-node">
+              <div class="host-header">
+                <div class="host-identity">
+                  <div class="host-icon">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                  </div>
+                  <div>
+                    <h3 class="host-title">Client Host</h3>
+                    <span class="host-ip">192.168.1.100</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">TCP Socket State:</span>
+                <div style="margin-top: 0.25rem;">
+                  <span class="state-pill state-closed" id="client-state-pill">CLOSED</span>
+                </div>
+              </div>
+
+              <div class="host-meta-list">
+                <div class="meta-row">
+                  <span class="meta-key">Active Port:</span>
+                  <span class="meta-val" id="client-port-val">50000</span>
+                </div>
+                <div class="meta-row">
+                  <span class="meta-key">Current Seq No:</span>
+                  <span class="meta-val" id="client-seq-val">1000</span>
+                </div>
+                <div class="meta-row">
+                  <span class="meta-key">Buffer Window:</span>
+                  <span class="meta-val">64,240 bytes</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Central Virtual Channel / Wire with Flying Packet -->
+            <div class="network-channel" id="network-channel">
+              <div class="wire-track">
+                <span class="wire-arrow-left">&larr;</span>
+                <span class="wire-arrow-right">&rarr;</span>
+              </div>
+              <!-- Floating In-flight Packet Capsule -->
+              <div class="packet-capsule" id="active-packet-capsule">
+                <span class="packet-flag-tag">SYN</span>
+                <div class="packet-meta-quick">Seq: 1000</div>
+              </div>
+            </div>
+
+            <!-- Server Node (Right) -->
+            <div class="host-node server-node" id="server-node">
+              <div class="host-header">
+                <div class="host-identity">
+                  <div class="host-icon">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></svg>
+                  </div>
+                  <div>
+                    <h3 class="host-title">Server Host</h3>
+                    <span class="host-ip">192.168.1.1</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">TCP Socket State:</span>
+                <div style="margin-top: 0.25rem;">
+                  <span class="state-pill state-listen" id="server-state-pill">LISTEN</span>
+                </div>
+              </div>
+
+              <div class="host-meta-list">
+                <div class="meta-row">
+                  <span class="meta-key">Listening Port:</span>
+                  <span class="meta-val" id="server-port-val">80</span>
+                </div>
+                <div class="meta-row">
+                  <span class="meta-key">Current Seq No:</span>
+                  <span class="meta-val" id="server-seq-val">Unassigned</span>
+                </div>
+                <div class="meta-row">
+                  <span class="meta-key">Buffer Window:</span>
+                  <span class="meta-val">65,535 bytes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Connection Status Result Banner -->
+          <div class="connection-status-banner" id="connection-status-banner">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20" style="color:var(--text-muted);"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+              <span>Handshake Progress: Step 0 of 3</span>
+            </div>
+            <span style="font-size:0.8rem; color:var(--text-muted);">Connection Closed</span>
+          </div>
+
+          <!-- Step Narrative Card -->
+          <div class="step-explainer" id="step-narrative-box">
+            <h4>Handshake Ready</h4>
+            <p>Click "Start Simulation" to run all three steps automatically, or use "Next Step" to advance manually.</p>
+          </div>
+        </div>
+
+        <!-- Live Simulation Statistics -->
+        <div class="grid-4" style="margin-bottom: 2rem;">
+          <div class="stat-box">
+            <div class="stat-icon blue">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+            </div>
+            <div class="stat-content">
+              <div class="stat-label">Packets Sent</div>
+              <div class="stat-value" id="stat-packets-sent">0</div>
+            </div>
+          </div>
+
+          <div class="stat-box">
+            <div class="stat-icon green">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div class="stat-content">
+              <div class="stat-label">Packets Received</div>
+              <div class="stat-value" id="stat-packets-recv">0</div>
+            </div>
+          </div>
+
+          <div class="stat-box">
+            <div class="stat-icon amber">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div class="stat-content">
+              <div class="stat-label">Packets Dropped</div>
+              <div class="stat-value" id="stat-packets-lost">0</div>
+            </div>
+          </div>
+
+          <div class="stat-box">
+            <div class="stat-icon purple">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            </div>
+            <div class="stat-content">
+              <div class="stat-label">Current Step</div>
+              <div class="stat-value" id="stat-current-step">0 / 3</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 Column Layout: Packet Inspector & Sequence Chart -->
+        <div class="grid-2" style="margin-bottom: 2rem;">
+          <!-- Left: Packet Inspector (Live 32-bit TCP Header) -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                TCP Header Packet Inspector
+              </h3>
+              <span class="badge badge-syn">32-Bit Word Header</span>
+            </div>
+            <div id="packet-inspector-container">
+              <!-- Rendered via js/packets.js -->
+            </div>
+          </div>
+
+          <!-- Right: Dynamic Sequence Ladder Diagram -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                Sequence Ladder Diagram (MSC)
+              </h3>
+              <span class="badge badge-ack">Dynamic SVG</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.85rem;">
+              Timeline visualization illustrating packet flight directions, sequence numbers, and acknowledgment arithmetic in chronological order.
+            </p>
+            <div class="chart-svg-wrap">
+              <svg id="sequence-chart-svg" viewBox="0 0 640 240" style="width: 100%; height: auto; min-height: 220px;"></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wireshark-Style Chronological Event Log -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+              Packet Transmission Log (Wireshark Style)
+            </h3>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Click any row to inspect packet header details</span>
+          </div>
+          <div class="event-log-container">
+            <table class="event-table">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Time</th>
+                  <th>Source</th>
+                  <th>Destination</th>
+                  <th>Protocol / Flags</th>
+                  <th>Seq No.</th>
+                  <th>Ack No.</th>
+                  <th>Info</th>
+                </tr>
+              </thead>
+              <tbody id="event-log-tbody">
+                <tr>
+                  <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">
+                    No packets transmitted yet. Click "Start Simulation" or "Next Step".
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- App Footer -->
+      <footer class="app-footer">
+        <div class="footer-left">
+          <span class="footer-badge">Computer Networks PBL</span>
+          <span>Interactive 3-Way Handshake Simulator</span>
+        </div>
+        <div>
+          <span>B.Tech / BE Engineering Demonstration &bull; &copy; <span id="current-year"></span></span>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+  <script src="../js/packets.js"></script>
+  <script src="../js/simulator.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>
